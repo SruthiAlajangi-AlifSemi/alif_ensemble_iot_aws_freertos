@@ -49,3 +49,6 @@
 [submodule "libraries/abstractions/ota_pal_psa"]
 	path = libraries/abstractions/ota_pal_psa
 	url = https://github.com/Linaro/freertos-ota-pal-psa.git
+[submodule "libraries/fleet-provisioning"]
+	path = libraries/fleet-provisioning
+	url = https://github.com/aws/Fleet-Provisioning-for-AWS-IoT-embedded-sdk.git

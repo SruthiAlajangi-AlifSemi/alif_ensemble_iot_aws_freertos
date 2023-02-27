@@ -90,8 +90,8 @@
 
 /*Define for FreeRTOS*/
 #define STACK_SIZE     1024
-#define TIMER_SERVICE_TASK_STACK_SIZE configTIMER_TASK_STACK_DEPTH // 512
-#define IDLE_TASK_STACK_SIZE          configMINIMAL_STACK_SIZE // 1024
+#define TIMER_SERVICE_TASK_STACK_SIZE configTIMER_TASK_STACK_DEPTH
+#define IDLE_TASK_STACK_SIZE          configMINIMAL_STACK_SIZE
 
 StackType_t IdleStack[2 * IDLE_TASK_STACK_SIZE];
 StaticTask_t IdleTcb;
@@ -227,20 +227,20 @@ int8_t cBuffer[ 16 ];
 }
 /****************************** FreeRTOS functions **********************/
 
-//void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize)
-//{
-//    *ppxIdleTaskTCBBuffer = &IdleTcb;
-//    *ppxIdleTaskStackBuffer = IdleStack;
-//    *pulIdleTaskStackSize = IDLE_TASK_STACK_SIZE;
-//}
-//
-//void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer,
-//      StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize)
-//{
-//    *ppxTimerTaskTCBBuffer = &TimerTcb;
-//    *ppxTimerTaskStackBuffer = TimerStack;
-//    *pulTimerTaskStackSize = TIMER_SERVICE_TASK_STACK_SIZE;
-//}
+void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize)
+{
+    *ppxIdleTaskTCBBuffer = &IdleTcb;
+    *ppxIdleTaskStackBuffer = IdleStack;
+    *pulIdleTaskStackSize = IDLE_TASK_STACK_SIZE;
+}
+
+void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer,
+      StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize)
+{
+    *ppxTimerTaskTCBBuffer = &TimerTcb;
+    *ppxTimerTaskStackBuffer = TimerStack;
+    *pulTimerTaskStackSize = TIMER_SERVICE_TASK_STACK_SIZE;
+}
 //
 //void vApplicationIdleHook(void)
 //{
@@ -295,3 +295,5 @@ int main (void) {
 
     return 0;
 }
+
+
