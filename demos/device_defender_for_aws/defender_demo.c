@@ -163,7 +163,15 @@ static char deviceMetricsJsonReport[ DEVICE_METRICS_REPORT_BUFFER_SIZE ];
  * @brief Report Id sent in the defender report.
  */
 static uint32_t reportId = 0;
+
+static uint16_t usPublishPacketIdentifier;
+
+#define mqttexampleTOPIC                                  democonfigCLIENT_IDENTIFIER "/device_defender/test"
+
 /*-----------------------------------------------------------*/
+
+/* function to publish sample message to AWS IoT core on mqttexampleTOPIC */
+static BaseType_t prvMQTTPublishToTopic( MQTTContext_t * pxMQTTContext );
 
 /**
  * @brief Callback to receive the incoming publish messages from the MQTT broker.
@@ -230,6 +238,32 @@ static BaseType_t unsubscribeFromDefenderTopics( MQTTContext_t * pMqttContext );
  */
 static bool validateDefenderResponse( const char * defenderResponse,
                                       size_t defenderResponseLength );
+
+int n=0;
+
+/**
+ * @brief MQTT packet type received from the MQTT broker.
+ *
+ * @note Only on receiving incoming PUBLISH, SUBACK, and UNSUBACK, this
+ * variable is updated. For MQTT packets PUBACK and PINGRESP, the variable is
+ * not updated since there is no need to specifically wait for it in this demo.
+ * A single variable suffices as this demo uses single task and requests one operation
+ * (of PUBLISH, SUBSCRIBE, UNSUBSCRIBE) at a time before expecting response from
+ * the broker. Hence it is not possible to receive multiple packets of type PUBLISH,
+ * SUBACK, and UNSUBACK in a single call of #prvWaitForPacket.
+ * For a multi task application, consider a different method to wait for the packet, if needed.
+ */
+static uint16_t usPacketTypeReceived = 0U;
+
+
+/**
+ * @brief Process incoming Publish message.
+ *
+ * @param[in] pxPublishInfo is a pointer to structure containing deserialized
+ * Publish message.
+ */
+static void prvMQTTProcessIncomingPublish( MQTTPublishInfo_t * pxPublishInfo );
+
 /*-----------------------------------------------------------*/
 
 static bool validateDefenderResponse( const char * defenderResponse,
@@ -332,9 +366,9 @@ static void publishCallback( MQTTContext_t * pMqttContext,
 
                 if( validationResult == true )
                 {
-                    LogInfo( ( "The defender report was accepted by the service. Response: %.*s.",
+                    printf("The defender report was accepted by the service. Response: %.*s.\n",
                                ( int ) pPublishInfo->payloadLength,
-                               ( const char * ) pPublishInfo->pPayload ) );
+                               ( const char * ) pPublishInfo->pPayload);
                     reportStatus = ReportStatusAccepted;
                 }
             }
@@ -346,9 +380,9 @@ static void publishCallback( MQTTContext_t * pMqttContext,
 
                 if( validationResult == true )
                 {
-                    LogError( ( "The defender report was rejected by the service. Response: %.*s.",
+                    printf("The defender report was rejected by the service. Response: %.*s.\n",
                                 ( int ) pPublishInfo->payloadLength,
-                                ( const char * ) pPublishInfo->pPayload ) );
+                                ( const char * ) pPublishInfo->pPayload);
                     reportStatus = ReportStatusRejected;
                 }
             }
@@ -358,7 +392,7 @@ static void publishCallback( MQTTContext_t * pMqttContext,
             }
         }
         else
-        {
+        {   prvMQTTProcessIncomingPublish( pDeserializedInfo->pPublishInfo );
             LogError( ( "Unexpected publish message received. Topic: %.*s, Payload: %.*s.",
                         ( int ) pPublishInfo->topicNameLength,
                         ( const char * ) pPublishInfo->pTopicName,
@@ -563,7 +597,7 @@ static BaseType_t generateDeviceMetricsReport( size_t * pOutReportLength )
                                               DEVICE_METRICS_REPORT_MINOR_VERSION,
                                               reportId,
                                               pOutReportLength );
-
+    printf("Metrics report :%s\n",deviceMetricsJsonReport);
     if( reportBuilderStatus != ReportBuilderSuccess )
     {
         LogError( ( "GenerateJsonReport failed. Status: %d.",
@@ -638,7 +672,8 @@ int RunDeviceDefenderDemo( bool awsIotMqttMode,
 
         if( demoStatus == pdFAIL )
         {
-            LogError( ( "Failed to establish MQTT session." ) );
+            printf("Failed to establish MQTT session.\n");
+
         }
         else
         {
@@ -647,29 +682,36 @@ int RunDeviceDefenderDemo( bool awsIotMqttMode,
 
         if( demoStatus == pdPASS )
         {
-            LogInfo( ( "Subscribing to defender topics..." ) );
+            printf("Subscribing to defender topics...\n");
             demoStatus = subscribeToDefenderTopics( &mqttContext );
 
             if( demoStatus == pdFAIL )
             {
-                LogError( ( "Failed to subscribe to defender topics." ) );
+                printf("Failed to subscribe to defender topics.\n");
             }
         }
+        if( demoStatus == pdPASS )
+        {
+            demoStatus = SubscribeToTopic( &mqttContext,
+                                           mqttexampleTOPIC,
+                                           strlen ( mqttexampleTOPIC ) );
+        }
+
 
         if( demoStatus == pdPASS )
         {
-            LogInfo( ( "Collecting device metrics..." ) );
+            printf("Collecting device metrics...\n");
             demoStatus = collectDeviceMetrics();
 
             if( demoStatus == pdFAIL )
             {
-                LogError( ( "Failed to collect device metrics." ) );
+                printf("Failed to collect device metrics.\n");
             }
         }
 
         if( demoStatus == pdPASS )
         {
-            LogInfo( ( "Generating device defender report..." ) );
+            printf("Generating device defender report...\n");
             demoStatus = generateDeviceMetricsReport( &( reportLength ) );
 
             /* Free the allocated array in deviceMetrics struct which is not
@@ -681,13 +723,13 @@ int RunDeviceDefenderDemo( bool awsIotMqttMode,
 
             if( demoStatus == pdFAIL )
             {
-                LogError( ( "Failed to generate device defender report." ) );
+                printf("Failed to generate device defender report.\n");
             }
         }
 
         if( demoStatus == pdPASS )
         {
-            LogInfo( ( "Publishing device defender report..." ) );
+            printf("Publishing device defender report...\n");
             demoStatus = PublishToTopic( &mqttContext,
                                          DEFENDER_API_JSON_PUBLISH( THING_NAME ),
                                          DEFENDER_API_LENGTH_JSON_PUBLISH( THING_NAME_LENGTH ),
@@ -696,7 +738,7 @@ int RunDeviceDefenderDemo( bool awsIotMqttMode,
 
             if( demoStatus == pdFAIL )
             {
-                LogError( ( "Failed to publish device defender report." ) );
+                printf("Failed to publish device defender report.\n");
             }
         }
 
@@ -719,9 +761,21 @@ int RunDeviceDefenderDemo( bool awsIotMqttMode,
 
         if( reportStatus == ReportStatusNotReceived )
         {
-            LogError( ( "Failed to receive response from AWS IoT Device Defender Service." ) );
+            printf("Failed to receive response from AWS IoT Device Defender Service.\n");
             demoStatus = pdFAIL;
         }
+        if( demoStatus == pdPASS )
+        {
+            for(int i=0;i<14;i++)
+            {
+                demoStatus = prvMQTTPublishToTopic( &mqttContext );
+                if(demoStatus != pdPASS)
+                {
+                   printf(" %dth message failed to publish to AWS IoT Core\n",i);
+                }
+            }
+        }
+
 
         /* Unsubscribe and disconnect if MQTT session was established. Per the MQTT
          * protocol spec, it is okay to send UNSUBSCRIBE even if no corresponding
@@ -729,15 +783,14 @@ int RunDeviceDefenderDemo( bool awsIotMqttMode,
          * unsubscribe even if one more subscribe failed earlier. */
         if( mqttSessionEstablished )
         {
-            LogInfo( ( "Unsubscribing from defender topics..." ) );
+            printf("Unsubscribing from defender topics...\n");
             demoStatus = unsubscribeFromDefenderTopics( &mqttContext );
 
             if( demoStatus == pdFAIL )
             {
-                LogError( ( "Failed to unsubscribe from defender topics." ) );
+                printf("Failed to unsubscribe from defender topics.\n");
             }
-
-            LogInfo( ( "Closing MQTT session..." ) );
+            printf("Closing MQTT session...\n");
             ( void ) DisconnectMqttSession( &mqttContext, &networkContext );
         }
 
@@ -746,8 +799,7 @@ int RunDeviceDefenderDemo( bool awsIotMqttMode,
 
         if( ( demoStatus == pdPASS ) && ( reportStatus == ReportStatusAccepted ) )
         {
-            LogInfo( ( "Demo completed successfully." ) );
-
+            printf("Demo completed successfully.\n");
             /* Reset the flag for demo retry. */
             retryDemoLoop = pdFALSE;
         }
@@ -757,9 +809,10 @@ int RunDeviceDefenderDemo( bool awsIotMqttMode,
 
             if( demoRunCount < DEFENDER_DEMO_MAX_ATTEMPTS )
             {
-                LogWarn( ( "Demo iteration %lu failed. Retrying...",
-                           ( unsigned long ) demoRunCount ) );
+                printf("Demo iteration %lu failed. Retrying...\n",
+                           ( unsigned long ) demoRunCount );
                 retryDemoLoop = pdTRUE;
+
 
                 /* Clear the flag indicating successful MQTT session establishment
                  * before attempting a retry. */
@@ -770,13 +823,80 @@ int RunDeviceDefenderDemo( bool awsIotMqttMode,
             }
             else
             {
-                LogError( ( "All %lu demo iterations failed.",
-                            ( unsigned long ) DEFENDER_DEMO_MAX_ATTEMPTS ) );
+                printf("All %lu demo iterations failed.\n",
+                            ( unsigned long ) DEFENDER_DEMO_MAX_ATTEMPTS );
                 retryDemoLoop = pdFALSE;
             }
         }
     } while( retryDemoLoop == pdTRUE );
 
     return( ( demoStatus == pdPASS ) ? EXIT_SUCCESS : EXIT_FAILURE );
+}
+
+/*function to publish sample message to AWS IoT core on mqttexampleTOPIC*/
+static BaseType_t prvMQTTPublishToTopic( MQTTContext_t * pxMQTTContext )
+{
+    MQTTStatus_t xResult;
+    MQTTPublishInfo_t xMQTTPublishInfo;
+    BaseType_t xStatus = pdPASS;
+    n = n+1;
+    char *str = "AlifSemiconductor";
+    char str2[30];
+    sprintf(str2,"message %d :",n);
+    strcat(str2,str);
+
+    /* Some fields are not used by this demo so start with everything at 0. */
+    ( void ) memset( ( void * ) &xMQTTPublishInfo, 0x00, sizeof( xMQTTPublishInfo ) );
+
+    /* This demo uses QoS1. */
+    xMQTTPublishInfo.qos = MQTTQoS1;
+    xMQTTPublishInfo.retain = false;
+    xMQTTPublishInfo.pTopicName = mqttexampleTOPIC;
+    xMQTTPublishInfo.topicNameLength = ( uint16_t ) strlen( mqttexampleTOPIC );
+    xMQTTPublishInfo.pPayload = str2;
+    xMQTTPublishInfo.payloadLength = strlen(str2);
+
+    /* Get a unique packet id. */
+    usPublishPacketIdentifier = MQTT_GetPacketId( pxMQTTContext );
+
+    /* Send PUBLISH packet. Packet ID is not used for a QoS1 publish. */
+    xResult = MQTT_Publish( pxMQTTContext, &xMQTTPublishInfo, usPublishPacketIdentifier );
+
+    if( xResult != MQTTSuccess )
+    {
+        xStatus = pdFAIL;
+        printf( "Failed to send PUBLISH message to broker: Topic=%s, Error=%s",
+                mqttexampleTOPIC,
+                MQTT_Status_strerror( xResult ) );
+    }
+
+    return xStatus;
+}
+
+static void prvMQTTProcessIncomingPublish( MQTTPublishInfo_t * pxPublishInfo )
+{
+    configASSERT( pxPublishInfo != NULL );
+
+    /* Set the global for indicating that an incoming publish is received. */
+    usPacketTypeReceived = MQTT_PACKET_TYPE_PUBLISH;
+    static int counter =0;
+    counter++;
+    /* Process incoming Publish. */
+    LogInfo( ( "Incoming QoS : %d\n", pxPublishInfo->qos ) );
+    /* Verify the received publish is for the we have subscribed to. */
+    if( ( pxPublishInfo->topicNameLength == strlen( mqttexampleTOPIC ) ) &&
+        ( 0 == strncmp( mqttexampleTOPIC, pxPublishInfo->pTopicName, pxPublishInfo->topicNameLength ) ) )
+    {
+        printf( "counter : %d\n",counter );
+        printf( "Incoming Publish Topic Name: %.*s matches subscribed topic. Incoming Publish Message : %.*s\n",
+                 pxPublishInfo->topicNameLength,pxPublishInfo->pTopicName,pxPublishInfo->payloadLength,pxPublishInfo->pPayload );
+
+    }
+    else
+    {
+        printf( "Incoming Publish Topic Name: %.*s does not match subscribed topic.\n",
+                   pxPublishInfo->topicNameLength,
+                   pxPublishInfo->pTopicName );
+    }
 }
 /*-----------------------------------------------------------*/

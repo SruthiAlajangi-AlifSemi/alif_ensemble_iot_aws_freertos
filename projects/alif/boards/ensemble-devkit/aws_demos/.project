@@ -125,6 +125,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>demos/fleet_provisioning</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>demos/include</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -365,7 +370,7 @@
 			<locationURI>AWS_IOT_MCU_ROOT/demos/device_defender_for_aws/defender_demo.c</locationURI>
 		</link>
 		<link>
-			<name>demos/device_defender_for_aws/freertos_plus_tcp</name>
+			<name>demos/device_defender_for_aws/metrics_collector</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -388,6 +393,11 @@
 			<name>demos/device_shadow_for_aws/shadow_demo_main.c</name>
 			<type>1</type>
 			<locationURI>AWS_IOT_MCU_ROOT/demos/device_shadow_for_aws/shadow_demo_main.c</locationURI>
+		</link>
+		<link>
+			<name>demos/fleet_provisioning/fleet_provisioning_demo_app.c</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/demos/fleet_provisioning/fleet_provisioning_demo_app.c</locationURI>
 		</link>
 		<link>
 			<name>demos/include/aws_clientcredential.h</name>
@@ -645,9 +655,9 @@
 			<locationURI>AWS_IOT_MCU_ROOT/demos/dev_mode_key_provisioning/src/aws_dev_mode_key_provisioning.c</locationURI>
 		</link>
 		<link>
-			<name>demos/device_defender_for_aws/freertos_plus_tcp/metrics_collector.c</name>
-			<type>1</type>
-			<locationURI>AWS_IOT_MCU_ROOT/demos/device_defender_for_aws/metrics_collector/freertos_plus_tcp/metrics_collector.c</locationURI>
+			<name>demos/device_defender_for_aws/metrics_collector/freertos_plus_tcp</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>demos/ota/ota_demo_core_mqtt/ota_demo_core_mqtt.c</name>
@@ -955,11 +965,6 @@
 			<locationURI>AWS_IOT_MCU_ROOT/FreeRTOS-Kernel/portable/ARMv8M/non_secure/portasm.h</locationURI>
 		</link>
 		<link>
-			<name>alif/boards/ensemble-devkit/aws_demos/alif_aws_demos</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>alif/boards/ensemble-devkit/aws_demos/application_code</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -983,6 +988,11 @@
 			<name>alif/boards/ensemble-devkit/ports/pkcs11</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>demos/device_defender_for_aws/metrics_collector/freertos_plus_tcp/metrics_collector.c</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/demos/device_defender_for_aws/metrics_collector/freertos_plus_tcp/metrics_collector.c</locationURI>
 		</link>
 		<link>
 			<name>libraries/3rdparty/mbedtls/include/.gitignore</name>
@@ -2035,21 +2045,6 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>alif/boards/ensemble-devkit/aws_demos/alif_aws_demos/defender_demo.c</name>
-			<type>1</type>
-			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/alif_aws_demos/defender_demo.c</locationURI>
-		</link>
-		<link>
-			<name>alif/boards/ensemble-devkit/aws_demos/alif_aws_demos/fleet_provisioning_demo_app.c</name>
-			<type>1</type>
-			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/alif_aws_demos/fleet_provisioning_demo_app.c</locationURI>
-		</link>
-		<link>
-			<name>alif/boards/ensemble-devkit/aws_demos/alif_aws_demos/shadow_demo_app.c</name>
-			<type>1</type>
-			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/alif_aws_demos/shadow_demo_app.c</locationURI>
-		</link>
-		<link>
 			<name>alif/boards/ensemble-devkit/aws_demos/application_code/Device</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -2060,9 +2055,19 @@
 			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/application_code/Driver_Flash_MRAM.c</locationURI>
 		</link>
 		<link>
+			<name>alif/boards/ensemble-devkit/aws_demos/application_code/Driver_GPIO.c</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/application_code/Driver_GPIO.c</locationURI>
+		</link>
+		<link>
 			<name>alif/boards/ensemble-devkit/aws_demos/application_code/Driver_PINMUX_AND_PINPAD.c</name>
 			<type>1</type>
 			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/application_code/Driver_PINMUX_AND_PINPAD.c</locationURI>
+		</link>
+		<link>
+			<name>alif/boards/ensemble-devkit/aws_demos/application_code/Driver_SPI.c</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/application_code/Driver_SPI.c</locationURI>
 		</link>
 		<link>
 			<name>alif/boards/ensemble-devkit/aws_demos/application_code/Driver_USART.c</name>
@@ -2070,9 +2075,19 @@
 			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/application_code/Driver_USART.c</locationURI>
 		</link>
 		<link>
+			<name>alif/boards/ensemble-devkit/aws_demos/application_code/GPIO_ll_drv.c</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/application_code/GPIO_ll_drv.c</locationURI>
+		</link>
+		<link>
 			<name>alif/boards/ensemble-devkit/aws_demos/application_code/NetworkInterface.c</name>
 			<type>1</type>
 			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/application_code/NetworkInterface.c</locationURI>
+		</link>
+		<link>
+			<name>alif/boards/ensemble-devkit/aws_demos/application_code/SPI_ll_drv.c</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/application_code/SPI_ll_drv.c</locationURI>
 		</link>
 		<link>
 			<name>alif/boards/ensemble-devkit/aws_demos/application_code/alif_utils</name>
@@ -2108,6 +2123,11 @@
 			<name>alif/boards/ensemble-devkit/aws_demos/application_code/se_services</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>alif/boards/ensemble-devkit/aws_demos/application_code/temeperature_sensor_app.c</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/application_code/temeperature_sensor_app.c</locationURI>
 		</link>
 		<link>
 			<name>alif/boards/ensemble-devkit/aws_demos/config_files/FreeRTOSConfig.h</name>
@@ -3120,6 +3140,11 @@
 			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/application_code/include/Driver_PINMUX_AND_PINPAD.h</locationURI>
 		</link>
 		<link>
+			<name>alif/boards/ensemble-devkit/aws_demos/application_code/include/Driver_SPI.h</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/application_code/include/Driver_SPI.h</locationURI>
+		</link>
+		<link>
 			<name>alif/boards/ensemble-devkit/aws_demos/application_code/include/Driver_USART.h</name>
 			<type>1</type>
 			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/application_code/include/Driver_USART.h</locationURI>
@@ -3130,9 +3155,19 @@
 			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/application_code/include/Flash_MRAM_dev.h</locationURI>
 		</link>
 		<link>
+			<name>alif/boards/ensemble-devkit/aws_demos/application_code/include/GPIO_ll_drv.h</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/application_code/include/GPIO_ll_drv.h</locationURI>
+		</link>
+		<link>
 			<name>alif/boards/ensemble-devkit/aws_demos/application_code/include/PINMUX_AND_PINPAD_Internal.h</name>
 			<type>1</type>
 			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/application_code/include/PINMUX_AND_PINPAD_Internal.h</locationURI>
+		</link>
+		<link>
+			<name>alif/boards/ensemble-devkit/aws_demos/application_code/include/SPI_ll_drv.h</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/vendors/alif/boards/ensemble-devkit/aws_demos/application_code/include/SPI_ll_drv.h</locationURI>
 		</link>
 		<link>
 			<name>alif/boards/ensemble-devkit/aws_demos/application_code/include/UART_dev.h</name>
