@@ -1,3 +1,5 @@
+# FreeRTOS AWS Reference Integrations
+
 ## Cloning
 
 This repo uses [Git Submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)  to bring in dependent components.
@@ -7,28 +9,29 @@ Note: If you download the ZIP file provided by GitHub UI, you will not get the c
 
 **To clone using HTTPS:**
 
-git clone https://github.com/SruthiAlajangiAlifSemi/alif_ensemble_iot_aws_freertos.git --recurse-submodules
+```git clone https://github.com/SruthiAlajangiAlifSemi/alif_ensemble_iot_aws_freertos.git --recurse-submodules```
 
 **Using SSH:**
 
-git clone git@github.com:SruthiAlajangi-AlifSemi/alif_ensemble_iot_aws_freertos.git 
+```git clone git@github.com:SruthiAlajangi-AlifSemi/alif_ensemble_iot_aws_freertos.git```
 
 If you have downloaded the repo without using the --recurse-submodules argument, you need to run:
 
-git submodule update --init --recursive
-
-### alif_ensemble_iot_aws_freertos/projects
-
-The ./projects folder contains the project files required for all the demo applications.
-
-### alif_ensemble_iot_aws_freertos/demos
-
-The ./demos folder contains the demo applications.
+```git submodule update --init --recursive```
 
 ## Getting started with Alif ensemble-devkit 
 
 ### Set up your development environment
 1.Install arm DEVELOPMENT STUDIO IDE.
+
+2.The installer for ARM DS IDE can be downloaded from [Arm Development Studio Downloads](https://developer.arm.com/downloads/-/arm-development-studio-downloads) by registering to ARM.  
+
+3.After installation when ARMDS is launched for the first time, it will prompt for license. Please set license file or floating license server as per license available.  
+
+4.30 day free evaluation license can be requested [here](https://developer.arm.com/downloads/-/arm-development-studio-evaluation).
+
+5.License can be updated later by going into ARM  **Help** menu -> **Arm License Manager**.
+
 ### Build and run the FreeRTOS demo project
 **Import the FreeRTOS demo into the arm development studio**
 
@@ -42,9 +45,9 @@ The ./demos folder contains the demo applications.
 
 ### Aws IoT Core setup required:
 
-1.Create AWS account by using [this](https://docs.aws.amazon.com/iot/latest/developerguide/setting-up.html) link.
+1.Create AWS account by using [Set up your AWS account](https://docs.aws.amazon.com/iot/latest/developerguide/setting-up.html).
 
-2.Register your device in AWS IoT Core by creating a thing and attaching a policy to it.  Follow **Register your MCU board with AWS IoT** section in [this](https://docs.aws.amazon.com/freertos/latest/userguide/freertos-prereqs.html) link. Download certificate and privatekey of the device.
+2.Register your device in AWS IoT Core by creating a thing and attaching a policy to it.  Follow **Register your MCU board with AWS IoT** section in [First Steps](https://docs.aws.amazon.com/freertos/latest/userguide/freertos-prereqs.html). Download certificate and privatekey of the device.
 
 ### Device setup required to run demo application on board.
 
@@ -63,8 +66,6 @@ The ./demos folder contains the demo applications.
  3.To enable specific demo application, uncomment demo specific macro in **aws_demo_config.h** which can be found in vendors/alif/boards/ensemble-devkit/aws_demos/config_files directory.
  
  4.Build the project by choosing **Build Project** from **Project** menu.
- 
- 5.Run the .axf the generated on the board using debugger.
  
  ### Monitoring MQTT messages on the cloud 
  
