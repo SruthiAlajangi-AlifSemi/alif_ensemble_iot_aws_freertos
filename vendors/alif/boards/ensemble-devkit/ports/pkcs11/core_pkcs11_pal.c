@@ -211,14 +211,17 @@ void prvHandleToLabel( char ** pcLabel,CK_OBJECT_HANDLE xHandle )
 
 CK_RV PKCS11_PAL_DestroyObject( CK_OBJECT_HANDLE xHandle )
 {
+
+    CK_RV xResult = CKR_OK;
     if (xHandle != eInvalidHandle)
     {
-        return CKR_OK;
+    	xResult = CKR_OK;
     }
     else
     {
-        return xHandle;
+        xResult = CKR_GENERAL_ERROR;
     }
+    return xResult;
 }
 
 void PAL_UTILS_LabelToHandle( const char * pcLabel,CK_OBJECT_HANDLE_PTR pHandle )

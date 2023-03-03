@@ -34,13 +34,9 @@
  * @todo Set this to the fully-qualified DNS name of your MQTT broker.
  */
 #ifndef clientcredentialMQTT_BROKER_ENDPOINT
-      #define clientcredentialMQTT_BROKER_ENDPOINT   "a2w5403v99tnvw-ats.iot.us-west-2.amazonaws.com"
+      #define clientcredentialMQTT_BROKER_ENDPOINT   " "
 #endif
 
-
-//#ifndef clientcredentialMQTT_BROKER_ENDPOINT
-//      #define clientcredentialMQTT_BROKER_ENDPOINT   "ak7zb7vnr3qj2-ats.iot.us-west-2.amazonaws.com"
-//#endif
 
 /*
  * @brief Host name.
@@ -53,12 +49,9 @@
  * than a hard coded constant.
  */
 #ifndef clientcredentialIOT_THING_NAME
-    #define clientcredentialIOT_THING_NAME    "Alif_thing"
+    #define clientcredentialIOT_THING_NAME    " "
 #endif
 
-//#ifndef clientcredentialIOT_THING_NAME
-//    #define clientcredentialIOT_THING_NAME    "SecondThing"
-//#endif
 
 /*
  * @brief Port number the MQTT broker is using.
