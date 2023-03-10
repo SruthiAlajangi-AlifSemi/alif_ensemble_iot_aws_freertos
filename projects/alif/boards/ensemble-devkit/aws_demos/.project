@@ -465,6 +465,11 @@
 			<locationURI>AWS_IOT_MCU_ROOT/demos/network_manager/iot_network_manager_private.h</locationURI>
 		</link>
 		<link>
+			<name>demos/ota/ota_demo_core_http</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>demos/ota/ota_demo_core_mqtt</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -658,6 +663,21 @@
 			<name>demos/device_defender_for_aws/metrics_collector/freertos_plus_tcp</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>demos/ota/ota_demo_core_http/CMakeLists.txt</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/demos/ota/ota_demo_core_http/CMakeLists.txt</locationURI>
+		</link>
+		<link>
+			<name>demos/ota/ota_demo_core_http/ota_demo_core_http.c</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/demos/ota/ota_demo_core_http/ota_demo_core_http.c</locationURI>
+		</link>
+		<link>
+			<name>demos/ota/ota_demo_core_mqtt/CMakeLists.txt</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/demos/ota/ota_demo_core_mqtt/CMakeLists.txt</locationURI>
 		</link>
 		<link>
 			<name>demos/ota/ota_demo_core_mqtt/ota_demo_core_mqtt.c</name>

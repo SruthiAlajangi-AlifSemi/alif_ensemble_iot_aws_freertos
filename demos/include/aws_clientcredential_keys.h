@@ -52,7 +52,7 @@
  */
 
 #ifndef keyCLIENT_CERTIFICATE_PEM
-    #define keyCLIENT_CERTIFICATE_PEM
+    #define keyCLIENT_CERTIFICATE_PEM " "
 
 #endif
 
@@ -98,7 +98,7 @@
  */
 
 #ifndef keyCLIENT_PRIVATE_KEY_PEM
-    #define keyCLIENT_PRIVATE_KEY_PEM
+    #define keyCLIENT_PRIVATE_KEY_PEM  " "
 #endif
 
 

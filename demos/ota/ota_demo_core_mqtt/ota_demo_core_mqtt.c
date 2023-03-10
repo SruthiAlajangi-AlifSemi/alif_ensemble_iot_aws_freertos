@@ -1,3 +1,12 @@
+/* Copyright (C) 2022 Alif Semiconductor - All Rights Reserved.
+ * Use, distribution and modification of this code is permitted under the
+ * terms stated in the Alif Semiconductor Software License Agreement
+ *
+ * You should have received a copy of the Alif Semiconductor Software
+ * License Agreement with this file. If not, please write to:
+ * contact@alifsemi.com, or visit: https://alifsemi.com/license
+ *
+ */
 /*
  * FreeRTOS V202203.00
  * Copyright (C) 2021 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
@@ -20,10 +29,16 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-/**
- * @file ota_demo_core_mqtt.c
- * @brief OTA update example using coreMQTT.
- */
+/******************************************************************************
+ * @file     ota_demo_core_mqtt.c
+ * @author   Ganesh Ramani
+ * @email    ganesh.ramani@alifsemi.com
+ * @version  V1.0.0
+ * @date
+ * @brief    File that demonstrates usage of AWS IoT OTA Service.
+ * @bug      None.
+ * @Note     None.
+ ******************************************************************************/
 
 /* Standard includes. */
 #include <assert.h>
@@ -90,6 +105,12 @@
 /* Includes the OTA Application version number. */
 #include "ota_appversion32.h"
 
+const AppVersion32_t appFirmwareVersion = {
+
+	.u.x.major = 1,
+	.u.x.minor = 0,
+	.u.x.build = 1
+};
 /*------------- Demo configurations -------------------------*/
 
 /** Note: The device client certificate and private key credentials are
@@ -144,7 +165,7 @@
  * the OTA statistics like number of packets received, dropped, processed and
  * queued per connection.
  */
-#define otaexampleEXAMPLE_TASK_DELAY_MS                  ( 1000U )
+#define otaexampleEXAMPLE_TASK_DELAY_MS                  ( 5000U )
 
 /**
  * @brief The timeout for waiting for the agent to get suspended after closing
@@ -192,6 +213,10 @@
  * agent and register appropirate callback for it.
  */
 #define otaexampleJOB_NOTIFY_TOPIC_FILTER                      otaexampleTOPIC_PREFIX "jobs/notify-next"
+
+
+#define mqttTelemetryTOPIC                                     democonfigCLIENT_IDENTIFIER "/example/topic"
+
 
 /**
  * @brief Length of job notification topic filter.
@@ -245,7 +270,7 @@
 /**
  * @brief Priority required for OTA agent task.
  */
-#define otaexampleAGENT_TASK_PRIORITY               ( tskIDLE_PRIORITY )
+#define otaexampleAGENT_TASK_PRIORITY               ( 5 ) //tskIDLE_PRIORITY )
 
 /**
  * @brief The number of ticks to wait for the OTA Agent to complete the shutdown.
@@ -316,7 +341,7 @@
 /**
  * @brief Priority required for OTA statistics task.
  */
-#define MQTT_AGENT_TASK_PRIORITY                    ( tskIDLE_PRIORITY )
+#define MQTT_AGENT_TASK_PRIORITY                    ( 5) //tskIDLE_PRIORITY )
 
 /**
  * @brief The maximum amount of time in milliseconds to wait for the commands
@@ -564,6 +589,11 @@ static OtaMqttStatus_t prvMqttSubscribe( const char * pcTopicFilter,
                                          uint16_t usTopicFilterLength,
                                          uint8_t ucQOS );
 
+/* With MQTT Agent MQTT Context */
+static OtaMqttStatus_t prvMqttSubscribe_Custom( const char * pcTopicFilter,
+                                         uint16_t usTopicFilterLength,
+                                         uint8_t ucQOS );
+
 /**
  * @brief Unsubscribe to the Mqtt topics.
  *
@@ -783,6 +813,9 @@ static void prvMqttDataCallback( void * pContext,
 static void prvMqttDefaultCallback( void * pvIncomingPublishCallbackContext,
                                     MQTTPublishInfo_t * pxPublishInfo );
 
+static void prvMqttTelemetryCallback(void *pvIncomingPublishCallbackContext,
+                                    MQTTPublishInfo_t* pxPublishInfo );
+
 /*-----------------------------------------------------------*/
 
 /**
@@ -791,6 +824,7 @@ static void prvMqttDefaultCallback( void * pvIncomingPublishCallbackContext,
  */
 static OtaTopicFilterCallback_t xOtaTopicFilterCallbacks[] =
 {
+
     {
         .pcTopicFilter = otaexampleJOB_NOTIFY_TOPIC_FILTER,
         .usTopicFilterLength = otaexampleJOB_NOTIFY_TOPIC_FILTER_LENGTH,
@@ -805,7 +839,13 @@ static OtaTopicFilterCallback_t xOtaTopicFilterCallbacks[] =
         .pcTopicFilter = otaexampleDEFAULT_TOPIC_FILTER,
         .usTopicFilterLength = otaexampleDEFAULT_TOPIC_FILTER_LENGTH,
         .xCallback = prvMqttDefaultCallback
-    }
+    },
+    {
+        .pcTopicFilter = mqttTelemetryTOPIC,
+        .usTopicFilterLength = strlen(mqttTelemetryTOPIC),
+        .xCallback = prvMqttTelemetryCallback
+    },
+
 };
 /*-----------------------------------------------------------*/
 
@@ -903,6 +943,8 @@ static void prvOtaAppCallback( OtaJobEvent_t xEvent,
                 LogInfo( ( "Successfully updated with the new image." ) );
             }
 
+            //OTA_Shutdown( otaexampleOTA_SHUTDOWN_WAIT_TICKS, otaexampleUNSUBSCRIBE_AFTER_OTA_SHUTDOWN );
+
             break;
 
         case OtaJobEventProcessed:
@@ -928,6 +970,12 @@ static void prvOtaAppCallback( OtaJobEvent_t xEvent,
              */
             OTA_Shutdown( otaexampleOTA_SHUTDOWN_WAIT_TICKS, otaexampleUNSUBSCRIBE_AFTER_OTA_SHUTDOWN );
 
+            break;
+
+        case OtaJobEventReceivedJob:
+
+            //TODO:
+            printf("The New JOB available \n");
             break;
 
         default:
@@ -1011,6 +1059,15 @@ static void prvMqttDefaultCallback( void * pvIncomingPublishCallbackContext,
     {
         prvMqttJobCallback( pvIncomingPublishCallbackContext, pxPublishInfo );
     }
+}
+
+static void prvMqttTelemetryCallback( void *pvIncomingPublishCallbackContext,
+                                      MQTTPublishInfo_t *pxPublishInfo)
+{
+
+    printf("The Message Received [%s] \n", pxPublishInfo->pPayload);
+
+    return;
 }
 
 /*-----------------------------------------------------------*/
@@ -1104,6 +1161,7 @@ static void prvRegisterOTACallback( const char * pcTopicFilter,
         }
     }
 }
+
 /*-----------------------------------------------------------*/
 
 static void prvMQTTSubscribeCompleteCallback( MQTTAgentCommandContext_t * pxCommandContext,
@@ -1510,6 +1568,66 @@ static OtaMqttStatus_t prvMqttSubscribe( const char * pcTopicFilter,
 
     return xOtaMqttStatus;
 }
+
+
+static OtaMqttStatus_t prvMqttSubscribe_Custom( const char * pcTopicFilter,
+                                         uint16_t usTopicFilterLength,
+                                         uint8_t ucQOS )
+{
+    OtaMqttStatus_t xOtaMqttStatus = OtaMqttSuccess;
+    MQTTStatus_t xCommandStatus;
+    MQTTAgentCommandInfo_t xCommandParams = { 0 };
+    MQTTAgentCommandContext_t xCommandContext;
+    MQTTSubscribeInfo_t xSubscription;
+    MQTTAgentSubscribeArgs_t xSubscribeArgs = { 0 };
+
+    memset( &( xCommandContext ), 0, sizeof( MQTTAgentCommandContext_t ) );
+    memset( &( xSubscription ), 0, sizeof( MQTTSubscribeInfo_t ) );
+
+    assert( pcTopicFilter != NULL );
+    assert( usTopicFilterLength > 0 );
+
+    xSubscription.qos = ( MQTTQoS_t ) ucQOS;
+    xSubscription.pTopicFilter = pcTopicFilter;
+    xSubscription.topicFilterLength = usTopicFilterLength;
+    xSubscribeArgs.numSubscriptions = 1;
+    xSubscribeArgs.pSubscribeInfo = &xSubscription;
+
+#if 1
+    xCommandParams.blockTimeMs = MQTT_AGENT_SEND_BLOCK_TIME_MS;
+    xCommandParams.cmdCompleteCallback = prvMQTTSubscribeCompleteCallback;
+    xCommandParams.pCmdCompleteCallbackContext = &xCommandContext;
+    xCommandContext.xTaskToNotify = xTaskGetCurrentTaskHandle();
+    xCommandContext.pArgs = &xSubscribeArgs;
+    xCommandContext.xReturnStatus = MQTTSendFailed;
+#endif
+
+    /* Disconnect MQTT session. */
+    xCommandStatus = MQTTAgent_Subscribe( &xGlobalMqttAgentContext, &xSubscribeArgs, &xCommandParams );
+    //MQTT_Subscribe(xGlobalMqttAgentContext.mqttContext, &xSubscribeArgs, 1, 1);
+    configASSERT( xCommandStatus == MQTTSuccess );
+
+    xTaskNotifyWait( 0,
+                     0,
+                     NULL,
+                     pdMS_TO_TICKS( MQTT_AGENT_MS_TO_WAIT_FOR_NOTIFICATION ) );
+
+    if( xCommandContext.xReturnStatus != MQTTSuccess )
+    {
+        LogError( ( "Failed to send SUBSCRIBE packet to broker with error = %u.", xCommandContext.xReturnStatus ) );
+        xOtaMqttStatus = OtaMqttSubscribeFailed;
+    }
+    else
+    {
+        LogInfo( ( "SUBSCRIBED to topic %.*s to broker.\n\n",
+                   usTopicFilterLength,
+                   pcTopicFilter ) );
+    }
+
+    return xOtaMqttStatus;
+}
+
+
 /*-----------------------------------------------------------*/
 
 static OtaMqttStatus_t prvMqttPublish( const char * const pcTopic,
@@ -1781,6 +1899,9 @@ static BaseType_t prvResumeOTA( void )
 
 static BaseType_t prvRunOTADemo( void )
 {
+    /* Log Iterator */
+    int iter = 0;
+
     /* Status indicating a successful demo or not. */
     BaseType_t xStatus = pdFAIL;
 
@@ -1821,6 +1942,8 @@ static BaseType_t prvRunOTADemo( void )
 
     if( xStatus == pdPASS )
     {
+    	vTaskDelay( pdMS_TO_TICKS( otaexampleEXAMPLE_TASK_DELAY_MS ) );
+
         xStatus = xTaskCreate( prvOTAAgentTask,
                                "OTA Agent Task",
                                otaexampleAGENT_TASK_STACK_SIZE,
@@ -1830,7 +1953,8 @@ static BaseType_t prvRunOTADemo( void )
 
         if( xStatus != pdPASS )
         {
-            LogError( ( "Failed to create OTA agent task:" ) );
+            LogError( ( "RetValue [%d] :: Failed to create OTA agent task ", xStatus ) );
+
         }
     }
 
@@ -1861,6 +1985,22 @@ static BaseType_t prvRunOTADemo( void )
                            xOtaStatistics.otaPacketsDropped ) );
             }
 
+            char strHelloWorld[128] = {0};
+            sprintf(strHelloWorld, "\"%s:%u version:%u.%u.%u\"", "Alif:OTA Demo App", iter ++,
+                        appFirmwareVersion.u.x.major,
+                        appFirmwareVersion.u.x.minor,
+                        appFirmwareVersion.u.x.build);
+
+            //Publish
+            prvMqttPublish( mqttTelemetryTOPIC, strlen(mqttTelemetryTOPIC),strHelloWorld, strlen(strHelloWorld), 0);
+#if 0
+            uint32_t rndValue = 0;
+            int32_t  eCode = 0;
+
+            SE_Service_MHU_GetRandom_Value(sizeof(rndValue), &rndValue, &eCode);
+
+            SERVICES_print("SE Generated Random Number %u \n", rndValue );
+#endif
             vTaskDelay( pdMS_TO_TICKS( otaexampleEXAMPLE_TASK_DELAY_MS ) );
         }
     }
@@ -1907,10 +2047,12 @@ int RunOtaCoreMqttDemo( bool xAwsIotMqttMode,
     BaseType_t xDemoStatus = pdFAIL;
     BaseType_t xMqttInitialized = pdFALSE;
 
-    LogInfo( ( "OTA over MQTT demo, Application version %u.%u.%u",
+    LogInfo( ( "OTA over MQTT demo, Application version %u.%u.%u\n",
                appFirmwareVersion.u.x.major,
                appFirmwareVersion.u.x.minor,
                appFirmwareVersion.u.x.build ) );
+
+    //otaPal_ActivateNewImage(1);
 
     /* Initialize semaphore for buffer operations. */
     xBufferSemaphore = xSemaphoreCreateMutex();
@@ -1938,6 +2080,8 @@ int RunOtaCoreMqttDemo( bool xAwsIotMqttMode,
             xMqttInitialized = pdTRUE;
         }
     }
+
+
 
     /**
      * Register a callback for receiving messages intended for OTA agent from broker,

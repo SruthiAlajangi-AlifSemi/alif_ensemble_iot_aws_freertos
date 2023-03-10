@@ -243,7 +243,7 @@
                     					
                     <sourceEntries>
                         						
-                        <entry excluding="libraries/abstractions/ota_pal_psa|libraries/ota_for_aws|demos/ota/ota_demo_core_mqtt/ota_demo_core_mqtt.c|libraries/ota_for_aws/source/ota.c|alif/boards/ensemble-devkit/aws_demos/alif_aws_demos/shadow_demo_app.c|alif/boards/ensemble-devkit/aws_demos/alif_aws_demos/defender_demo.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+                        <entry excluding="demos/ota/ota_demo_core_http|libraries/abstractions/ota_pal_psa|alif/boards/ensemble-devkit/aws_demos/alif_aws_demos/shadow_demo_app.c|alif/boards/ensemble-devkit/aws_demos/alif_aws_demos/defender_demo.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
                         					
                     </sourceEntries>
                     				
@@ -323,7 +323,7 @@
                     					
                     <sourceEntries>
                         						
-                        <entry excluding="libraries/abstractions/ota_pal_psa|libraries/ota_for_aws|demos/ota/ota_demo_core_mqtt/ota_demo_core_mqtt.c|libraries/ota_for_aws/source/ota.c|alif/boards/ensemble-devkit/aws_demos/alif_aws_demos/shadow_demo_app.c|alif/boards/ensemble-devkit/aws_demos/alif_aws_demos/defender_demo.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+                        <entry excluding="demos/ota/ota_demo_core_http|libraries/abstractions/ota_pal_psa|alif/boards/ensemble-devkit/aws_demos/alif_aws_demos/shadow_demo_app.c|alif/boards/ensemble-devkit/aws_demos/alif_aws_demos/defender_demo.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
                         					
                     </sourceEntries>
                     				
