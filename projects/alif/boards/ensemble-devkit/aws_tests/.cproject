@@ -67,13 +67,21 @@
                                 								
                                 <option id="com.arm.tool.c.compiler.v6.base.option.secure.mode.1071845267" name="Secure Code (-mcmse)" superClass="com.arm.tool.c.compiler.v6.base.option.secure.mode" useByScannerDiscovery="false" value="true" valueType="boolean"/>
                                 								
-                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.arm.tool.c.compiler.v6.base.option.defmac.877159216" superClass="com.arm.tool.c.compiler.v6.base.option.defmac" useByScannerDiscovery="false" valueType="definedSymbols">
+                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.arm.tool.c.compiler.v6.base.option.defmac.877159216" name="Define macro (-D)" superClass="com.arm.tool.c.compiler.v6.base.option.defmac" useByScannerDiscovery="false" valueType="definedSymbols">
                                     									
                                     <listOptionValue builtIn="false" value="M55_HP"/>
                                     									
                                     <listOptionValue builtIn="false" value="CPU=M55_HP"/>
                                     									
                                     <listOptionValue builtIn="false" value="MBEDTLS_CONFIG_FILE=\&quot;mbedtls_config.h\&quot;"/>
+                                    								
+                                </option>
+                                								
+                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.arm.tool.c.compiler.v6.base.option.incpath.1336562568" name="Include path (-I)" superClass="com.arm.tool.c.compiler.v6.base.option.incpath" useByScannerDiscovery="false" valueType="includePath">
+                                    									
+                                    <listOptionValue builtIn="false" value="./../../../../../../libraries/3rdparty/unity/extras/fixture/src"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="./../../../../../../libraries/3rdparty/unity/src"/>
                                     								
                                 </option>
                                 								
@@ -115,7 +123,7 @@
                                 								
                                 <option id="com.arm.tool.c.linker.option.scatter.1108286003" name="Scatter file (--scatter)" superClass="com.arm.tool.c.linker.option.scatter" useByScannerDiscovery="false" value="/home/sruthi/sruthi_github_prv/repo_project_test3/alif_ensemble_iot_aws_freertos/vendors/alif/boards/ensemble-devkit/aws_tests/application_code/Device/M55_HP.sct" valueType="string"/>
                                 								
-                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.arm.tool.c.linker.libs.851147673" superClass="com.arm.tool.c.linker.libs" useByScannerDiscovery="false" valueType="libs">
+                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.arm.tool.c.linker.libs.851147673" name="User library files" superClass="com.arm.tool.c.linker.libs" useByScannerDiscovery="false" valueType="libs">
                                     									
                                     <listOptionValue builtIn="false" value="./../../../../../../vendors/alif/boards/ensemble-devkit/aws_tests/application_code/se_services/lib/libservices_m55_lib.a"/>
                                     									

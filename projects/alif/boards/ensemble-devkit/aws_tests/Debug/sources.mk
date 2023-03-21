@@ -24,6 +24,10 @@ alif/boards/ensemble-devkit/aws_tests/application_code/Device \
 alif/boards/ensemble-devkit/aws_tests/application_code \
 alif/boards/ensemble-devkit/aws_tests/application_code/alif_utils \
 alif/boards/ensemble-devkit/ports/pkcs11 \
+libraries/3rdparty/mbedtls/library \
+libraries/3rdparty/mbedtls_utils \
+libraries/3rdparty/unity/extras/fixture/src \
+libraries/3rdparty/unity/src \
 libraries/abstractions/backoff_algorithm/source \
 libraries/abstractions/pkcs11/corePKCS11/source \
 libraries/abstractions/pkcs11/corePKCS11/source/portable/mbedtls \
