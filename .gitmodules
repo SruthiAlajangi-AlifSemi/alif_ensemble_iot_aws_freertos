@@ -46,3 +46,7 @@
 [submodule "libraries/fleet-provisioning"]
 	path = libraries/fleet-provisioning
 	url = https://github.com/aws/Fleet-Provisioning-for-AWS-IoT-embedded-sdk.git
+
+[submodule "libraries/3rdparty/unity"]
+	path = libraries/3rdparty/unity
+	url = https://github.com/ThrowTheSwitch/Unity
