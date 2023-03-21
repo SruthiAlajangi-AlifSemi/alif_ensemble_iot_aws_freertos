@@ -50,7 +50,7 @@ extern uint32_t SystemCoreClock;
 /* Constants that describe the hardware and memory usage. */
 #define configCPU_CLOCK_HZ                    (SystemCoreClock)
 #define configTICK_RATE_HZ                    ((TickType_t)1000)
-#define configTOTAL_HEAP_SIZE                 ((size_t)65536 * 8)
+#define configTOTAL_HEAP_SIZE                 ((size_t)65536 * 4)
 #define configMINIMAL_STACK_SIZE              ((uint16_t)512)
 #define configSUPPORT_DYNAMIC_ALLOCATION      1
 #define configSUPPORT_STATIC_ALLOCATION       1
@@ -94,7 +94,7 @@ extern uint32_t SystemCoreClock;
 
 /* Port specific configuration. */
 #define configENABLE_MPU                      0
-#define configENABLE_FPU                      1
+#define configENABLE_FPU                      0
 #define configENABLE_TRUSTZONE                0
 #define configMINIMAL_SECURE_STACK_SIZE       ((uint32_t)1024)
 #define configRUN_FREERTOS_SECURE_ONLY        1
@@ -153,10 +153,10 @@ extern uint32_t SystemCoreClock;
 #define vPortSVCHandler                       SVC_Handler
 #define xPortSysTickHandler                   SysTick_Handler
 
-#if (defined(__ARMCC_VERSION) || defined(__GNUC__) || defined(__ICCARM__))
-/* Include debug event definitions */
-#include "freertos_evr.h"
-#endif
+//#if (defined(__ARMCC_VERSION) || defined(__GNUC__) || defined(__ICCARM__))
+///* Include debug event definitions */
+//#include "freertos_evr.h"
+//#endif
 
 extern void vLoggingPrintf( const char * pcFormat, ... );
 #define configPRINTF( X )    vLoggingPrintf X

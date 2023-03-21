@@ -35,6 +35,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>demos</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>libraries</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -95,6 +100,21 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>demos/common</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>demos/dev_mode_key_provisioning</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>demos/network_manager</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>libraries/3rdparty</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -111,6 +131,11 @@
 		</link>
 		<link>
 			<name>libraries/coreMQTT</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libraries/device_shadow_for_aws</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -250,6 +275,31 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>demos/common/pkcs11_helpers</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>demos/dev_mode_key_provisioning/include</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>demos/dev_mode_key_provisioning/src</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>demos/network_manager/aws_iot_network_manager.c</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/demos/network_manager/aws_iot_network_manager.c</locationURI>
+		</link>
+		<link>
+			<name>demos/network_manager/iot_network_manager_private.h</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/demos/network_manager/iot_network_manager_private.h</locationURI>
+		</link>
+		<link>
 			<name>libraries/3rdparty/mbedtls</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -306,6 +356,11 @@
 		</link>
 		<link>
 			<name>libraries/coreMQTT/source</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libraries/device_shadow_for_aws/source</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -450,6 +505,26 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>demos/common/pkcs11_helpers/pkcs11_helpers.c</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/demos/common/pkcs11_helpers/pkcs11_helpers.c</locationURI>
+		</link>
+		<link>
+			<name>demos/common/pkcs11_helpers/pkcs11_helpers.h</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/demos/common/pkcs11_helpers/pkcs11_helpers.h</locationURI>
+		</link>
+		<link>
+			<name>demos/dev_mode_key_provisioning/include/aws_dev_mode_key_provisioning.h</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/demos/dev_mode_key_provisioning/include/aws_dev_mode_key_provisioning.h</locationURI>
+		</link>
+		<link>
+			<name>demos/dev_mode_key_provisioning/src/aws_dev_mode_key_provisioning.c</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/demos/dev_mode_key_provisioning/src/aws_dev_mode_key_provisioning.c</locationURI>
+		</link>
+		<link>
 			<name>libraries/3rdparty/mbedtls/include</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -568,6 +643,16 @@
 			<name>libraries/coreMQTT/source/interface</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libraries/device_shadow_for_aws/source/include</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libraries/device_shadow_for_aws/source/shadow.c</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/libraries/device_shadow_for_aws/source/shadow.c</locationURI>
 		</link>
 		<link>
 			<name>libraries/freertos_plus/standard/FreeRTOS-Plus-TCP</name>
@@ -1238,6 +1323,16 @@
 			<name>libraries/coreMQTT/source/interface/transport_interface.h</name>
 			<type>1</type>
 			<locationURI>AWS_IOT_MCU_ROOT/libraries/coreMQTT/source/interface/transport_interface.h</locationURI>
+		</link>
+		<link>
+			<name>libraries/device_shadow_for_aws/source/include/shadow.h</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/libraries/device_shadow_for_aws/source/include/shadow.h</locationURI>
+		</link>
+		<link>
+			<name>libraries/device_shadow_for_aws/source/include/shadow_config_defaults.h</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/libraries/device_shadow_for_aws/source/include/shadow_config_defaults.h</locationURI>
 		</link>
 		<link>
 			<name>libraries/freertos_plus/standard/FreeRTOS-Plus-TCP/FreeRTOS_ARP.c</name>
@@ -2358,6 +2453,11 @@
 			<name>libraries/3rdparty/unity/extras/fixture/src/unity_fixture_internals.h</name>
 			<type>1</type>
 			<locationURI>AWS_IOT_MCU_ROOT/libraries/3rdparty/unity/extras/fixture/src/unity_fixture_internals.h</locationURI>
+		</link>
+		<link>
+			<name>libraries/3rdparty/unity/extras/fixture/src/unity_fixture_malloc_overrides.h</name>
+			<type>1</type>
+			<locationURI>AWS_IOT_MCU_ROOT/libraries/3rdparty/unity/extras/fixture/src/unity_fixture_malloc_overrides.h</locationURI>
 		</link>
 		<link>
 			<name>libraries/abstractions/pkcs11/corePKCS11/source/include/core_pkcs11.h</name>

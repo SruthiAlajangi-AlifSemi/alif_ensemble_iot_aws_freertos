@@ -70,11 +70,11 @@
 #define testrunnerFULL_TCP_ENABLED                    0
 #define testrunnerFULL_TLS_ENABLED                    0
 #define testrunnerFULL_MEMORYLEAK_ENABLED             0
-#define testrunnerFULL_OTA_PAL_ENABLED                1
+#define testrunnerFULL_OTA_PAL_ENABLED                0
 #define testrunnerFULL_SERIALIZER_ENABLED             0
 #define testrunnerUTIL_PLATFORM_CLOCK_ENABLED         0
 #define testrunnerUTIL_PLATFORM_THREADS_ENABLED       0
-#define testrunnerFULL_DEVICE_SHADOW_ENABLED          0
+#define testrunnerFULL_DEVICE_SHADOW_ENABLED          1
 
 /* On systems using FreeRTOS+TCP (such as this one) the TCP segments must be
  * cleaned up before running the memory leak check. */
