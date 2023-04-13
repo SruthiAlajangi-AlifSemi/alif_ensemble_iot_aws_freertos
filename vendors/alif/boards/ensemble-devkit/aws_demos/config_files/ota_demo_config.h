@@ -44,6 +44,9 @@
 #ifndef OTA_DEMO_CONFIG_H_
 #define OTA_DEMO_CONFIG_H_
 
+/* Includes the OTA Application version number. */
+#include "ota_appversion32.h"
+
 /**
  * @brief Certificate used for validating code signing signatures in the OTA PAL.
  */

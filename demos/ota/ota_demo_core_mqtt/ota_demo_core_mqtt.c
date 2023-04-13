@@ -111,6 +111,7 @@ const AppVersion32_t appFirmwareVersion = {
 	.u.x.minor = 0,
 	.u.x.build = 1
 };
+
 /*------------- Demo configurations -------------------------*/
 
 /** Note: The device client certificate and private key credentials are

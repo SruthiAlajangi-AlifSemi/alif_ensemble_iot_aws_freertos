@@ -40,6 +40,9 @@
 
 #include "SE_Service_Int_MHU.h"
 
+/* Includes the OTA Application version number. */
+#include "ota_appversion32.h"
+
 /* Valid MRAM Flash address. */
 #define MRAM_ADDR           (MRAM_BASE + 0x100)
 
@@ -75,6 +78,13 @@ const char OTA_JsonFileSignatureKey[ OTA_FILE_SIG_KEY_STR_MAX_LENGTH ] = "sig-sh
  *
  */
 const OtaFileContext_t * pxSystemContext = NULL;
+
+const AppVersion32_t appFirmwareVersion = {
+
+    .u.x.major = 1,
+    .u.x.minor = 0,
+    .u.x.build = 1
+};
 
 /***********************************************************************
  *

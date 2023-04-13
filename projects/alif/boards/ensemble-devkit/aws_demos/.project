@@ -950,11 +950,6 @@
 			<locationURI>AWS_IOT_MCU_ROOT/libraries/ota_for_aws/source/ota_cbor.c</locationURI>
 		</link>
 		<link>
-			<name>libraries/ota_for_aws/source/ota_http.c</name>
-			<type>1</type>
-			<locationURI>AWS_IOT_MCU_ROOT/libraries/ota_for_aws/source/ota_http.c</locationURI>
-		</link>
-		<link>
 			<name>libraries/ota_for_aws/source/ota_interface.c</name>
 			<type>1</type>
 			<locationURI>AWS_IOT_MCU_ROOT/libraries/ota_for_aws/source/ota_interface.c</locationURI>

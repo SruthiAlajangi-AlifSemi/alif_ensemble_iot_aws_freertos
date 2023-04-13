@@ -15,7 +15,7 @@
 #define __ROM_BASE      0x00000000
 #define __ROM_SIZE      SRAM2_SIZE
 
-/*--------------------- DTCM Configuration ---------------------------
+/*------=-------------- DTCM Configuration ---------------------------
 ; <h> DTCM Configuration
 ;   <o0> DTCM Base Address    <0x0-0xFFFFFFFF:8>
 ;   <o1> DTCM Size (in Bytes) <0x0-0xFFFFFFFF:8>
